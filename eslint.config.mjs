@@ -1,10 +1,12 @@
+import path from "path";
+
+import { fileURLToPath } from "url";
+
 import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
 import typescript from "@typescript-eslint/eslint-plugin";
 import typescriptParser from "@typescript-eslint/parser";
 import prettier from "eslint-config-prettier";
-import path from "path";
-import { fileURLToPath } from "url";
 
 const compat = new FlatCompat({
   baseDirectory: path.dirname(fileURLToPath(import.meta.url)),
@@ -14,15 +16,73 @@ const compat = new FlatCompat({
  * @type {import("eslint").Linter.FlatConfig[]}
  */
 const config = [
+  {
+    files: ["**/*.{js,cjs,mjs,jsx}", "**/*.{ts,cts,mts,tsx}"],
+  },
+  {
+    ignores: [
+      // default
+      // "**/node_modules/",
+      //".git/",
+
+      // next.js
+      "/.next/",
+      "/out/",
+
+      // production
+      "/build",
+
+      // vercel
+      ".vercel",
+
+      // typescript
+      "next-env.d.ts",
+
+      // storybook
+      "storybook-static/",
+    ],
+  },
+
+  // common
   js.configs.recommended,
+
+  // Next.js
   ...compat.extends("next/core-web-vitals"),
-  ...compat.extends("plugin:storybook/recommended"),
+
+  // import
+  {
+    rules: {
+      "import/order": [
+        "error",
+        {
+          groups: [
+            "builtin",
+            "external",
+            "internal",
+            "unknown",
+            "parent",
+            "sibling",
+            "index",
+            "object",
+            "type",
+          ],
+          "newlines-between": "always-and-inside-groups",
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+        },
+      ],
+    },
+  },
+
+  // typescript
   {
     files: ["**/*.ts", "**/*.tsx"],
     languageOptions: {
       parser: typescriptParser,
       parserOptions: {
-        project: true,
+        project: "./tsconfig.json",
       },
     },
     plugins: {
@@ -41,6 +101,11 @@ const config = [
       ],
     },
   },
+
+  // storybook
+  ...compat.extends("plugin:storybook/recommended"),
+
+  // prettier
   prettier,
 ];
 
