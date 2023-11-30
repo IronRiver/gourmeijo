@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+
 export default function patchDOMForBrowserExtensions() {
   if (typeof Node === "function" && Node.prototype != null) {
     // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -57,4 +61,17 @@ export default function patchDOMForBrowserExtensions() {
       }
     };
   }
+}
+
+export function PatchDOMForBrowserExtensionsScript() {
+  const ref = useRef(false);
+
+  useEffect(() => {
+    if (!ref.current) {
+      patchDOMForBrowserExtensions();
+      ref.current = true;
+    }
+  }, []);
+
+  return null;
 }

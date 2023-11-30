@@ -14,7 +14,7 @@ export default function ThemeRegistry({
   children?: React.ReactNode;
 }) {
   return (
-    <EmotionRegistry options={{ key: "mui" }}>
+    <EmotionRegistry options={{ key: "css" }}>
       <ThemeProvider theme={createTheme({ ...options })}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />

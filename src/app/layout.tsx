@@ -3,10 +3,11 @@ import React from "react";
 
 import "./globals.css";
 import GlobalCssPriority from "./providers/GlobalCssPriority";
+import { PatchDOMForBrowserExtensionsScript } from "./providers/PatchDOMForBrowserExtensionsScript";
 import ThemeRegistry from "./providers/ThemeRegistry";
 import { lightTheme } from "./themes";
 import { noto_sans_jp } from "./themes/fonts";
-import { PatchDOMForBrowserExtensionsScript } from "./utils/patch-dom-for-browser-extensions/component";
+import { Header } from "./ui/Header";
 
 export const metadata: Metadata = {
   title: "ぐるMeijo",
@@ -20,12 +21,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ja">
-      <ThemeRegistry options={lightTheme}>
+      <body className={noto_sans_jp.className}>
         <GlobalCssPriority>
-          <body className={noto_sans_jp.className}>{children}</body>
+          <ThemeRegistry options={lightTheme}>
+            <Header />
+            {children}
+          </ThemeRegistry>
         </GlobalCssPriority>
-      </ThemeRegistry>
-      <PatchDOMForBrowserExtensionsScript />
+        <PatchDOMForBrowserExtensionsScript />
+      </body>
     </html>
   );
 }
