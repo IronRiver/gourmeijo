@@ -1,36 +1,17 @@
-import {
-  Box,
-  Typography,
-  Button,
-  AppBar,
-  IconButton,
-  Toolbar,
-} from "@mui/material";
-
+"use client";
+import { Box, Stack } from "@mui/material";
+import Leftarea from "./components/leftarea";
+import Righatarea from "./components/rightarea";
 import { Header } from "./ui/Header";
 
 export default function Home() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <Header />
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            🤔
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-      <Button variant="contained">Hello world</Button>
+      <Stack direction="row" spacing={2} justifyContent="space-between">
+        <Leftarea />
+        <Righatarea />
+      </Stack>
     </Box>
   );
 }
