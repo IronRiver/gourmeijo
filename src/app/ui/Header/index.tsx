@@ -34,7 +34,7 @@ export function Header() {
       <StyleToolbar>
         <Typography variant="h6">ぐるMeijo</Typography>
         <Search>
-          <InputBase placeholder="search..."></InputBase>
+          <InputBase fullWidth={true} placeholder="search..."></InputBase>
         </Search>
         <Button onClick={() => setopen(true)}>
           <Icons>
