@@ -1,4 +1,5 @@
 import { Box } from "@mui/material";
+
 import Post from "./post";
 
 const Rightarea = () => {

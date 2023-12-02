@@ -1,3 +1,4 @@
+import { Add as AddIcon } from "@mui/icons-material";
 import {
   Avatar,
   Box,
@@ -10,7 +11,6 @@ import {
   Typography,
   styled,
 } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
 import { useState } from "react";
 import React from "react";
 
@@ -70,7 +70,7 @@ const Addcomment = () => {
               name="simple-controlled"
               value={value}
               onChange={(event, newValue) => {
-                setValue(newValue);
+                setValue(newValue!);
               }}
             />
           </Box>

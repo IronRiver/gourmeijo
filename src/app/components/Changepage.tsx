@@ -1,8 +1,8 @@
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import * as React from "react";
 
 function a11yProps(index: number) {
   return {
@@ -11,7 +11,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function FullWidthTabs() {
+const FullWidthTabs = () => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -40,4 +40,5 @@ export default function FullWidthTabs() {
       </AppBar>
     </Box>
   );
-}
+};
+export default FullWidthTabs;

@@ -1,5 +1,6 @@
 import { Box, Button, SwipeableDrawer, Typography } from "@mui/material";
 import { useState } from "react";
+
 import Post from "./post";
 
 const Swipearea = () => {
@@ -33,6 +34,7 @@ const Swipearea = () => {
             overflow: "auto",
           }}
         >
+          <Button onClick={toggleDrawer(false)}>close</Button>
           <Typography variant="h5" sx={{ p: 2, color: "text.secondary" }}>
             store1
           </Typography>
