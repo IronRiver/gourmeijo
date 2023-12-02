@@ -1,6 +1,7 @@
 import { Box, Card, Modal } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 import Addcomment from "./add";
+import Slidearea from "./slidearea";
 const Leftarea = () => {
   return (
     <Box bgcolor="skyblue" flex={6}>
@@ -14,6 +15,7 @@ const Leftarea = () => {
           />
         </Card>
       </Box>
+      <Slidearea />
       <Addcomment />
     </Box>
   );

@@ -28,7 +28,7 @@ const UserBox = styled(Box)({
 
 const Addcomment = () => {
   const [open, setopen] = useState(false);
-  const [value, setValue] = React.useState<number | null>(2);
+  const [value, setValue] = useState(0);
   return (
     <>
       <Tooltip
@@ -65,7 +65,7 @@ const Addcomment = () => {
           <Box
             sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
           >
-            <Typography variant="h6">store1</Typography>
+            <Typography variant="h6">Restaurant</Typography>
             <Rating
               name="simple-controlled"
               value={value}
