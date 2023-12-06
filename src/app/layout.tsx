@@ -14,6 +14,17 @@ export const metadata: Metadata = {
   description: "名城大学のみんなのためのごはんマップ",
 };
 
+function GlobalProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <GlobalCssPriority>
+        <ThemeRegistry options={lightTheme}>{children}</ThemeRegistry>
+      </GlobalCssPriority>
+      <PatchDOMForBrowserExtensionsScript />
+    </>
+  );
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -22,13 +33,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={noto_sans_jp.className}>
-        <GlobalCssPriority>
-          <ThemeRegistry options={lightTheme}>
-            <Header />
-            {children}
-          </ThemeRegistry>
-        </GlobalCssPriority>
-        <PatchDOMForBrowserExtensionsScript />
+        <GlobalProvider>
+          <Header />
+          {children}
+        </GlobalProvider>
       </body>
     </html>
   );
