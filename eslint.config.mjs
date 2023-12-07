@@ -102,9 +102,6 @@ const config = [
     },
   },
 
-  // storybook
-  ...compat.extends("plugin:storybook/recommended"),
-
   // prettier
   prettier,
 ];
