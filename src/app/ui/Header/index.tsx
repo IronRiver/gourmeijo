@@ -8,8 +8,8 @@ export interface HeaderProps {}
 
 export function Header(props: HeaderProps) {
   return (
-    <AppBar position="static">
-      <Toolbar>
+    <AppBar position="sticky">
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <IconButton
           size="large"
           edge="start"
