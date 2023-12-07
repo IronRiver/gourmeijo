@@ -3,8 +3,6 @@
 import { Search as SearchIcon } from "@mui/icons-material";
 import { styled, alpha } from "@mui/material/styles";
 
-export interface SearchProps {}
-
 const SearchNav = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -30,7 +28,7 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
   justifyContent: "center",
 }));
 
-export function Search(props: SearchProps) {
+export function Search() {
   return (
     <SearchNav>
       <SearchIconWrapper>

@@ -3,9 +3,7 @@ import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 
 import { Search } from "../Search";
 
-export interface HeaderProps {}
-
-export function Header(props: HeaderProps) {
+export function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="sticky">
