@@ -1,39 +1,57 @@
 "use client";
 
 import { Search as SearchIcon } from "@mui/icons-material";
-import { styled, alpha } from "@mui/material/styles";
+import {
+  FormControl,
+  InputAdornment,
+  InputBase,
+  alpha,
+  styled,
+} from "@mui/material";
 
-const SearchNav = styled("div")(({ theme }) => ({
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
   position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
+  flexGrow: 1,
+  marginRight: theme.spacing(2),
   marginLeft: 0,
-  width: "100%",
   [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(1),
-    width: "auto",
+    marginLeft: theme.spacing(3),
+  },
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 1),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.85),
   },
 }));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1),
+    transition: theme.transitions.create("width"),
+  },
+}));
+
+const StyledInputAdornment = styled(InputAdornment)(({ theme }) => ({
   display: "flex",
+  height: "100%",
+  padding: theme.spacing(0, 1),
   alignItems: "center",
   justifyContent: "center",
+  pointerEvents: "none",
 }));
 
 export function Search() {
   return (
-    <SearchNav>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-    </SearchNav>
+    <StyledFormControl>
+      <StyledInputBase
+        placeholder="Search…"
+        inputProps={{ "aria-label": "search" }}
+        startAdornment={
+          <StyledInputAdornment position="start">
+            <SearchIcon />
+          </StyledInputAdornment>
+        }
+      />
+    </StyledFormControl>
   );
 }

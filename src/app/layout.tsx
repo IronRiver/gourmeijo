@@ -1,24 +1,36 @@
+import { CssBaseline } from "@mui/material";
 import { Metadata } from "next";
-import React from "react";
+import { ReactNode } from "react";
 
-import "./globals.css";
+import EmotionRegistry from "./providers/EmotionRegistry";
 import GlobalCssPriority from "./providers/GlobalCssPriority";
 import { PatchDOMForBrowserExtensionsScript } from "./providers/PatchDOMForBrowserExtensionsScript";
 import ThemeRegistry from "./providers/ThemeRegistry";
 import { lightTheme } from "./themes";
 import { noto_sans_jp } from "./themes/fonts";
+
 import { Header } from "./ui/Header";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "ぐるMeijo",
   description: "名城大学のみんなのためのごはんマップ",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
-function GlobalProvider({ children }: { children: React.ReactNode }) {
+function GlobalProvider({ children }: { children: ReactNode }) {
   return (
     <>
       <GlobalCssPriority>
-        <ThemeRegistry options={lightTheme}>{children}</ThemeRegistry>
+        <EmotionRegistry options={{ prepend: true }}>
+          <ThemeRegistry options={lightTheme}>
+            {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+            <CssBaseline />
+            {children}
+          </ThemeRegistry>
+        </EmotionRegistry>
       </GlobalCssPriority>
       <PatchDOMForBrowserExtensionsScript />
     </>
@@ -27,17 +39,20 @@ function GlobalProvider({ children }: { children: React.ReactNode }) {
 
 export default function RootLayout({
   children,
+  map,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  map: ReactNode;
 }) {
   return (
     <html lang="ja">
-      <body className={noto_sans_jp.className}>
-        <GlobalProvider>
+      <GlobalProvider>
+        <body className={`${noto_sans_jp.className} flex`}>
           <Header />
           {children}
-        </GlobalProvider>
-      </body>
+          {map}
+        </body>
+      </GlobalProvider>
     </html>
   );
 }

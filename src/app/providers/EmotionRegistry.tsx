@@ -1,23 +1,42 @@
 "use client";
 
 import createCache from "@emotion/cache";
-import { CacheProvider } from "@emotion/react";
+import { CacheProvider as DefaultCacheProvider } from "@emotion/react";
 import { useServerInsertedHTML } from "next/navigation";
-import React from "react";
+import { ReactNode, useEffect, useState } from "react";
 
-import type { Options as EmotionCacheOptions } from "@emotion/cache";
+import type {
+  EmotionCache,
+  Options as EmotionCacheOptions,
+} from "@emotion/cache";
+import type { ProviderProps } from "react";
 
-function createEmotionCache(options: EmotionCacheOptions) {
-  const cache = createCache(options);
+export interface EmotionRegistryProps {
+  options?: Partial<EmotionCacheOptions> & { enableCssLayer?: boolean };
+  CacheProvider?: (props: ProviderProps<EmotionCache>) => ReactNode;
+  children?: ReactNode;
+}
+
+function createEmotionRegistry(
+  options: Partial<EmotionCacheOptions> & { enableCssLayer?: boolean }
+) {
+  const { enableCssLayer, key = "mui", ...rest } = options;
+  const cache = createCache({ key, ...rest });
   cache.compat = true;
 
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const prevInsert = cache.insert;
-  let inserted: string[] = [];
+  let inserted: { name: string; isGlobal: boolean }[] = [];
   cache.insert = function (...args) {
-    const [, serialized] = args;
+    if (enableCssLayer) {
+      args[1].styles = `@layer mui {${args[1].styles}}`;
+    }
+    const [selector, serialized] = args;
     if (cache.inserted[serialized.name] === undefined) {
-      inserted.push(serialized.name);
+      inserted.push({
+        name: serialized.name,
+        isGlobal: !selector,
+      });
     }
     return prevInsert.apply(this, args);
   };
@@ -31,37 +50,63 @@ function createEmotionCache(options: EmotionCacheOptions) {
   return { cache, flush };
 }
 
-export interface NextAppDirEmotionCacheProviderProps {
-  /** This is the options passed to createCache() from 'import createCache from "@emotion/cache"' */
-  options: Omit<EmotionCacheOptions, "insertionPoint">;
-  children: React.ReactNode;
-}
+export default function EmotionRegistry(props: EmotionRegistryProps) {
+  const {
+    options = {},
+    CacheProvider = DefaultCacheProvider,
+    children,
+  } = props;
 
-export default function EmotionRegistry(
-  props: NextAppDirEmotionCacheProviderProps
-) {
-  const { options, children } = props;
-
-  const [registry] = React.useState(() => createEmotionCache(options));
+  const [registry] = useState(() => createEmotionRegistry(options));
 
   useServerInsertedHTML(() => {
-    const names = registry.flush();
-    if (names.length === 0) {
+    const inserted = registry.flush();
+    if (inserted.length === 0) {
       return null;
     }
+
     let styles = "";
-    for (const name of names) {
-      styles += registry.cache.inserted[name];
+    let dataEmotionAttribute = registry.cache.key;
+    const globals: {
+      name: string;
+      style: string;
+    }[] = [];
+
+    for (const { name, isGlobal } of inserted) {
+      const style = registry.cache.inserted[name];
+      if (typeof style !== "boolean") {
+        if (isGlobal) {
+          globals.push({ name, style });
+        } else {
+          styles += style;
+          dataEmotionAttribute += ` ${name}`;
+        }
+      }
     }
+
     return (
-      <style
-        key={registry.cache.key}
-        data-emotion={`${registry.cache.key} ${names.join(" ")}`}
-        dangerouslySetInnerHTML={{
-          __html: styles,
-        }}
-      />
+      <>
+        {globals.map(({ name, style }) => (
+          <style
+            key={name}
+            data-emotion={`${registry.cache.key}-global ${name}`}
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: style }}
+          />
+        ))}
+        {styles && (
+          <style
+            data-emotion={dataEmotionAttribute}
+            // eslint-disable-next-line react/no-danger
+            dangerouslySetInnerHTML={{ __html: styles }}
+          />
+        )}
+      </>
     );
+  });
+
+  useEffect(() => {
+    console.log(registry);
   });
 
   return <CacheProvider value={registry.cache}>{children}</CacheProvider>;
