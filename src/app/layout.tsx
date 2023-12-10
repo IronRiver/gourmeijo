@@ -37,20 +37,13 @@ function GlobalProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export default function RootLayout({
-  children,
-  map,
-}: {
-  children: ReactNode;
-  map: ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ja">
       <GlobalProvider>
         <body className={`${noto_sans_jp.className} flex`}>
           <Header />
           {children}
-          {map}
         </body>
       </GlobalProvider>
     </html>

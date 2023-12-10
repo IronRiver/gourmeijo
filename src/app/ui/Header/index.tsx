@@ -1,7 +1,8 @@
+"use client";
+
 import MenuIcon from "@mui/icons-material/Menu";
-import { AppBar, IconButton, Toolbar, Link, SvgIcon } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Link } from "@mui/material";
 import NextLink from "next/link";
-import Image from "next/image";
 
 import { Search } from "../Search";
 
@@ -31,7 +32,6 @@ export function Header() {
             justifyContent: "center",
           }}
         >
-          {/* <SvgIcon></SvgIcon> */}
           ぐるMeijo
         </Link>
         <Search />
