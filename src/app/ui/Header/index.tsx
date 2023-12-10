@@ -1,3 +1,5 @@
+// Header.js
+import React, { useState } from "react";
 import {
   AppBar,
   Button,
@@ -10,11 +12,17 @@ import {
   MenuItem,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useState } from "react";
+import Login from "../../components/Login";
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { app } from "../../firebase";
+
+const auth = getAuth(app);
+
 const StyleToolbar = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
 });
+
 const Search = styled("div")(({ theme }) => ({
   backgroundColor: "white",
   padding: "0 10px",
@@ -27,8 +35,31 @@ const Icons = styled(Box)(({ theme }) => ({
   display: "flex",
   borderRadius: theme.shape.borderRadius,
 }));
+
 export function Header() {
-  const [open, setopen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  React.useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleMenuToggle = () => {
+    setOpen(!open);
+  };
+
+  const handleLogin = () => {
+    // ログイン後の処理
+  };
+
+  const handleLogout = () => {
+    // ログアウト後の処理
+  };
+
   return (
     <AppBar position="sticky">
       <StyleToolbar>
@@ -36,16 +67,25 @@ export function Header() {
         <Search>
           <InputBase fullWidth={true} placeholder="search..."></InputBase>
         </Search>
-        <Button onClick={() => setopen(true)}>
+        <Button onClick={handleMenuToggle}>
           <Icons>
-            <AccountCircleIcon></AccountCircleIcon>
+            {user ? (
+              <>
+                <AccountCircleIcon />
+                <Typography variant="body1" style={{ marginLeft: "8px" }}>
+                  {user.displayName}
+                </Typography>
+              </>
+            ) : (
+              <AccountCircleIcon />
+            )}
           </Icons>
         </Button>
       </StyleToolbar>
       <Menu
         id="basic-menu"
         open={open}
-        onClose={() => setopen(false)}
+        onClose={() => setOpen(false)}
         anchorOrigin={{
           vertical: "top",
           horizontal: "right",
@@ -60,7 +100,10 @@ export function Header() {
       >
         <MenuItem>Profile</MenuItem>
         <MenuItem>My account</MenuItem>
-        <MenuItem>Logout</MenuItem>
+        <MenuItem>
+          <Login onLogin={handleLogin} onLogout={handleLogout} user={user} />{" "}
+          {/* ログインコンポーネント呼び出し */}
+        </MenuItem>
       </Menu>
     </AppBar>
   );
