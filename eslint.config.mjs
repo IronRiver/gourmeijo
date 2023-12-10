@@ -71,6 +71,13 @@ const config = [
             order: "asc",
             caseInsensitive: true,
           },
+          pathGroups: [
+            {
+              pattern: "{.,..}/**/*.+(css|sass|less|scss|pcss|styl)",
+              group: "unknown",
+              position: "after",
+            },
+          ],
         },
       ],
     },
