@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
 
-import Post from "./post";
+import Restaurant from "./Restaurant";
 
 const Rightarea = () => {
   return (
     <Box bgcolor="white" flex={4} sx={{ display: { xs: "none", sm: "block" } }}>
-      <Post />
-      <Post />
-      <Post />
+      <Restaurant />
+      <Restaurant />
+      <Restaurant />
     </Box>
   );
 };

@@ -1,3 +1,4 @@
+"use client";
 import { Add as AddIcon } from "@mui/icons-material";
 import {
   Avatar,

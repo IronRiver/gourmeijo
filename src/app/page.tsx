@@ -1,5 +1,5 @@
-"use client";
 import { Box, Stack } from "@mui/material";
+
 import Leftarea from "./components/leftarea";
 import Righatarea from "./components/rightarea";
 import { Header } from "./ui/Header";

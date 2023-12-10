@@ -1,3 +1,4 @@
+"use client";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {
   AppBar,

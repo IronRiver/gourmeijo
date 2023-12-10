@@ -1,15 +1,17 @@
-import Favorite from "@mui/icons-material/Favorite";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import { FavoriteBorder, Favorite } from "@mui/icons-material";
 import ShareIcon from "@mui/icons-material/Share";
-import { Checkbox } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+
+import {
+  Card,
+  CardHeader,
+  Avatar,
+  IconButton,
+  CardMedia,
+  CardContent,
+  Typography,
+  CardActions,
+  Checkbox,
+} from "@mui/material";
 
 const Post = () => {
   return (

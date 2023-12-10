@@ -1,5 +1,6 @@
-import { Box, Card, Modal } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
+
 import Addcomment from "./add";
 import Slidearea from "./slidearea";
 const Leftarea = () => {
