@@ -3,7 +3,7 @@
 import createCache from "@emotion/cache";
 import { CacheProvider as DefaultCacheProvider } from "@emotion/react";
 import { useServerInsertedHTML } from "next/navigation";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 
 import type {
   EmotionCache,
@@ -103,10 +103,6 @@ export default function EmotionRegistry(props: EmotionRegistryProps) {
         )}
       </>
     );
-  });
-
-  useEffect(() => {
-    console.log(registry);
   });
 
   return <CacheProvider value={registry.cache}>{children}</CacheProvider>;

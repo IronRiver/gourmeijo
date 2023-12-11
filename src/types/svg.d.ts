@@ -1,9 +1,9 @@
 declare module "*.svg" {
-  import { ReactElement, SVGProps } from "react";
+  import { StaticImageData } from "next/dist/shared/lib/image-external";
 
-  const ReactComponent: (props: SVGProps<SVGElement>) => ReactElement;
+  export const content: StaticImageData;
 
-  export default ReactComponent;
+  export default content;
 }
 
 declare module "*.svg?url" {
@@ -12,4 +12,12 @@ declare module "*.svg?url" {
   export const content: StaticImageData;
 
   export default content;
+}
+
+declare module "*.svg?react" {
+  import { ReactElement, SVGProps } from "react";
+
+  const ReactComponent: (props: SVGProps<SVGElement>) => ReactElement;
+
+  export default ReactComponent;
 }
