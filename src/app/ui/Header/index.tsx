@@ -8,7 +8,7 @@ import { Search } from "../Search";
 
 export function Header() {
   return (
-    <AppBar position="sticky" sx={{ flexGrow: 1 }}>
+    <AppBar position="sticky">
       <Toolbar>
         <IconButton
           size="large"
@@ -27,9 +27,8 @@ export function Header() {
           component={NextLink}
           href="/"
           sx={{
-            display: { xs: "none", sm: "block" },
+            display: { xs: "none", sm: "flex" },
             alignItems: "center",
-            justifyContent: "center",
           }}
         >
           ぐるMeijo

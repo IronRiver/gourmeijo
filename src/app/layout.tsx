@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ja">
       <GlobalProvider>
-        <body className={`${noto_sans_jp.className} flex`}>
+        <body className={`${noto_sans_jp.className}`}>
           <Header />
           {children}
         </body>
