@@ -48,6 +48,7 @@ const Addcomment = () => {
   const [image, setImage] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [isImageInserted, setIsImageInserted] = useState(false);
+  const [shopName, setShopName] = useState("");
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -76,30 +77,32 @@ const Addcomment = () => {
     }
 
     try {
+      setUploading(true);
+      let imageUrl = "";
       if (image) {
-        setUploading(true);
-        const imageUrl = await uploadImage(image);
-        setUploading(false);
-
-        const reviewData = {
-          rating: value,
-          review: comment,
-          imageUrl,
-          timestamp: new Date(),
-          userId: currentUser.uid,
-        };
-
-        await addDoc(collection(db, "reviews"), reviewData);
-        console.log("Review added to Firestore");
-
-        setValue(0);
-        setComment("");
-        setopen(false);
-        setErrorMessage("");
-        setIsImageInserted(true);
-      } else {
-        setErrorMessage("画像を選択してください");
+        imageUrl = await uploadImage(image);
       }
+      setUploading(false);
+
+      const reviewData = {
+        rating: value,
+        review: comment,
+        imageUrl,
+        timestamp: new Date(),
+        userName: currentUser.displayName,
+        userId: currentUser.uid,
+        shopName: shopName, // 店名を保存
+      };
+
+      await addDoc(collection(db, "reviews"), reviewData);
+      console.log("Review added to Firestore");
+
+      setValue(0);
+      setComment("");
+      setopen(false);
+      setErrorMessage("");
+      setIsImageInserted(!!image);
+      setShopName("ラーメン丸"); // 初期値に戻す
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -134,6 +137,7 @@ const Addcomment = () => {
         onClose={() => {
           setopen(false);
           setValue(0);
+          setShopName(""); // モーダルが閉じられたときに初期値に戻す
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -153,7 +157,15 @@ const Addcomment = () => {
           <Box
             sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
           >
-            <Typography variant="h6">ラーメン丸</Typography>
+            {/* ラーメン丸のテキストをTextFieldに変更 */}
+            <TextField
+              sx={{ width: "100%" }}
+              id="shop-name"
+              label="お店の名前"
+              variant="standard"
+              value={shopName}
+              onChange={(e) => setShopName(e.target.value)}
+            />
             <Rating
               name="simple-controlled"
               value={value}
