@@ -143,15 +143,10 @@ const Post: React.FC = () => {
       console.error("Error deleting post:", error);
     }
   };
-  useEffect(() => {
-    console.log("Current User ID:", currentUser?.uid);
-  }, [currentUser?.uid]);
+
   return (
     <>
       {postData.map((post) => {
-        console.log("currentUser UID:", currentUser?.uid);
-        console.log("post userId:", post.userId);
-        console.log("Match:", currentUser?.uid === post.userId);
         return (
           <Card key={post.id} sx={{ margin: 5 }}>
             <CardHeader

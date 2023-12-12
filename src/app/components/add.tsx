@@ -49,14 +49,22 @@ const Addcomment = () => {
   const [uploading, setUploading] = useState(false);
   const [isImageInserted, setIsImageInserted] = useState(false);
   const [shopName, setShopName] = useState("");
+  const [location, setLocation] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
 
   useEffect(() => {
+    loadData();
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
-
     return () => unsubscribe();
   }, []);
+
+  const loadData = async () => {
+    // データをロードする処理をここに記述
+  };
 
   const uploadImage = async (imageFile: File) => {
     try {
@@ -78,6 +86,23 @@ const Addcomment = () => {
 
     try {
       setUploading(true);
+
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setLocation({
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
+            });
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+
       let imageUrl = "";
       if (image) {
         imageUrl = await uploadImage(image);
@@ -91,7 +116,8 @@ const Addcomment = () => {
         timestamp: new Date(),
         userName: currentUser.displayName,
         userId: currentUser.uid,
-        shopName: shopName, // 店名を保存
+        shopName,
+        location,
       };
 
       await addDoc(collection(db, "reviews"), reviewData);
@@ -102,7 +128,8 @@ const Addcomment = () => {
       setopen(false);
       setErrorMessage("");
       setIsImageInserted(!!image);
-      setShopName("ラーメン丸"); // 初期値に戻す
+      setShopName("");
+      setLocation(null);
     } catch (error) {
       console.error("Error adding document: ", error);
     }
@@ -137,7 +164,7 @@ const Addcomment = () => {
         onClose={() => {
           setopen(false);
           setValue(0);
-          setShopName(""); // モーダルが閉じられたときに初期値に戻す
+          setShopName("");
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -157,7 +184,6 @@ const Addcomment = () => {
           <Box
             sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
           >
-            {/* ラーメン丸のテキストをTextFieldに変更 */}
             <TextField
               sx={{ width: "100%" }}
               id="shop-name"
