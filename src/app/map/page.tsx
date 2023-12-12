@@ -7,8 +7,8 @@ export default function MapPage() {
   return (
     <Map
       initialViewState={{
-        longitude: -122.4,
-        latitude: 37.8,
+        longitude: 136.9760683,
+        latitude: 35.1356448,
         zoom: 14,
       }}
       style={{ flex: "auto" }}
