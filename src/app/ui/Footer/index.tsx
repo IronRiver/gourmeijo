@@ -7,8 +7,16 @@ import {
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Paper from "@mui/material/Paper";
-import NextLink from "next/link";
+import NextLink, { LinkProps as NextLinkProps } from "next/link";
 import { usePathname } from "next/navigation";
+import { Ref, forwardRef } from "react";
+
+const ReplaceLinkBehaviour = forwardRef(function LinkBehaviour(
+  props: Omit<NextLinkProps, "replace">,
+  ref: Ref<HTMLAnchorElement>
+) {
+  return <NextLink ref={ref} replace {...props} />;
+});
 
 export function Footer() {
   const pathName = usePathname();
@@ -19,18 +27,18 @@ export function Footer() {
     >
       <BottomNavigation showLabels value={pathName}>
         <BottomNavigationAction
-          LinkComponent={NextLink}
-          href="/map"
-          label="マップ"
-          value="/map"
-          icon={<LocationOnIcon />}
-        />
-        <BottomNavigationAction
-          LinkComponent={NextLink}
+          LinkComponent={ReplaceLinkBehaviour}
           href="/"
           label="レビュー"
           value="/"
           icon={<CollectionsIcon />}
+        />
+        <BottomNavigationAction
+          LinkComponent={ReplaceLinkBehaviour}
+          href="/map"
+          label="マップ"
+          value="/map"
+          icon={<LocationOnIcon />}
         />
       </BottomNavigation>
     </Paper>
