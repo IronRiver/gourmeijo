@@ -2,14 +2,12 @@ import {
   AccountCircle as AccountCircleIcon,
   Menu as MenuIcon,
 } from "@mui/icons-material";
-import { AppBar, IconButton, Link, SvgIcon, Toolbar } from "@mui/material";
+import { AppBar, IconButton, Link, Toolbar } from "@mui/material";
 import NextLink from "next/link";
-
-import Icon from "../../../../public/icon.svg?react";
 
 export function Header() {
   return (
-    <AppBar position="sticky" color="inherit">
+    <AppBar position="sticky">
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <IconButton size="large" color="inherit" aria-label="open drawer">
           <MenuIcon />
@@ -20,11 +18,14 @@ export function Header() {
           variant="h6"
           component={NextLink}
           href="/"
-          sx={{ display: "inline-flex", alignItems: "center" }}
+          sx={{
+            display: "inline-flex",
+            alignItems: "center",
+          }}
         >
-          <SvgIcon>
+          {/* <SvgIcon>
             <Icon />
-          </SvgIcon>
+          </SvgIcon> */}
           ぐるMeijo
         </Link>
         <IconButton size="large" color="inherit">
