@@ -1,17 +1,14 @@
-import {
-  AccountCircle as AccountCircleIcon,
-  Menu as MenuIcon,
-} from "@mui/icons-material";
-import { AppBar, IconButton, Link, Toolbar } from "@mui/material";
+import { AppBar, Link, Toolbar } from "@mui/material";
 import NextLink from "next/link";
+
+import AccountButton from "./AccountButton";
+import MenuButton from "./MenuButton";
 
 export function Header() {
   return (
     <AppBar position="sticky">
       <Toolbar sx={{ justifyContent: "space-between" }}>
-        <IconButton size="large" color="inherit" aria-label="open drawer">
-          <MenuIcon />
-        </IconButton>
+        <MenuButton />
         <Link
           color="inherit"
           underline="none"
@@ -23,14 +20,9 @@ export function Header() {
             alignItems: "center",
           }}
         >
-          {/* <SvgIcon>
-            <Icon />
-          </SvgIcon> */}
           ぐるMeijo
         </Link>
-        <IconButton size="large" color="inherit">
-          <AccountCircleIcon />
-        </IconButton>
+        <AccountButton />
       </Toolbar>
     </AppBar>
   );

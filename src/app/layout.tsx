@@ -9,6 +9,8 @@ import { Header } from "./ui/Header";
 
 import "./globals.css";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "ぐるMeijo",
   description: "名城大学のみんなのためのごはんマップ",
