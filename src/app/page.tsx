@@ -30,7 +30,7 @@ import AddReviewFAB from "./ui/AddReviewFAB";
 
 import type { Timestamp } from "firebase/firestore";
 
-interface PostData {
+export interface PostData {
   id: string;
   title: string;
   date: string;
@@ -42,6 +42,10 @@ interface PostData {
   shopName: string;
   likes: string[];
   userName: string;
+  location?: {
+    latitude: number;
+    longitude: number;
+  };
 }
 
 export default function Home() {

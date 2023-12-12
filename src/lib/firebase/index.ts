@@ -18,6 +18,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  query
 } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -57,5 +58,6 @@ export {
   signOut,
   signInWithPopup,
   GoogleAuthProvider,
+  query
 };
 export type { User };
