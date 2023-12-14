@@ -42,12 +42,6 @@
       stroke-dasharray: none;
       stroke-opacity: 1;
     }
-    @media (prefers-color-scheme: dark) {
-      .path {
-        fill: #000000;
-        stroke: #ffffff;
-      }
-    }
   </style>
   <ellipse
      style="font-variation-settings:'wght' 800;fill:none;stroke:#000000;stroke-width:10;stroke-linecap:square;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;stop-color:#000000"
