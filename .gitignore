@@ -60,3 +60,6 @@ storybook-static/
 # Ignore all local history of files
 .history
 .ionide
+
+.config
+.secrets
