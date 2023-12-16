@@ -1,15 +1,14 @@
-import { Metadata } from "next";
-import { ReactNode } from "react";
+import "./styles/globals.css";
 
-import { Providers } from "./providers";
-import { noto_sans_jp } from "./themes/fonts";
+import EmotionRegistry from "@/components/EmotionRegistry";
+import PatchDOMForBrowserExtensionsScript from "@/components/PatchDOMForBrowserExtensionsScript";
 
-import { Footer } from "./ui/Footer";
-import { Header } from "./ui/Header";
+import ThemeProvider from "./styles/ThemeProvider";
 
-import "./globals.css";
+import { noto_sans_jp } from "./styles/themes";
 
-export const dynamic = "force-dynamic";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   title: "ぐるMeijo",
@@ -19,20 +18,24 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+  modal,
+}: {
+  children: ReactNode;
+  modal: ReactNode;
+}) {
   return (
     <html lang="ja">
-      <Providers>
-        <body
-          className={`${noto_sans_jp.className} flex flex-col h-full min-h-screen`}
-        >
-          <Header />
-          <main className="flex-grow flex flex-col items-stretch">
+      <body className={`${noto_sans_jp.className} flex flex-col min-h-screen`}>
+        <EmotionRegistry options={{ key: "mui", enableCssLayer: true }}>
+          <ThemeProvider>
             {children}
-          </main>
-          <Footer />
-        </body>
-      </Providers>
+            {modal}
+          </ThemeProvider>
+        </EmotionRegistry>
+        <PatchDOMForBrowserExtensionsScript />
+      </body>
     </html>
   );
 }

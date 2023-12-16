@@ -19,5 +19,8 @@
     "*.css": "tailwindcss"
   },
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "terminal.integrated.env.windows": {
+    "XDG_CONFIG_HOME": "${workspaceRoot}/.config"
+  }
 }
