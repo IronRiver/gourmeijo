@@ -13,7 +13,7 @@ export interface Review {
   rating: number;
   content: string;
   imageUrl?: string;
-  location?: GeoPoint;
+  location?: Pick<GeoPoint, "latitude" | "longitude">;
   like_count: number;
   liked: string[];
 }
