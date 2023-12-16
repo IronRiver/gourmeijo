@@ -50,6 +50,7 @@ function getRestaurantsSnapshot(callback: (reviews: ReviewData[]) => void) {
 
   const unsubscribe = onSnapshot(q, (snapshot) => {
     const results = snapshot.docs.map((doc) => convertRaw(doc));
+    console.log(results);
     callback(results);
   });
 
@@ -77,7 +78,7 @@ export default function ReviewListings(props: ReviewListingsProps) {
     const reviewRef = doc(db, "reviews", review.id);
     await updateDoc(
       reviewRef,
-      review.liked.includes(user.uid)
+      review.liked?.includes(user.uid)
         ? {
             like_count: increment(-1),
             liked: arrayRemove(user.uid),
@@ -120,7 +121,7 @@ export default function ReviewListings(props: ReviewListingsProps) {
               component="img"
               height="194"
               className="w-auto max-h-[350px] mx-auto my-auto"
-              image={review.imageUrl.toString()}
+              image={review.imageUrl}
               alt=""
             />
           ) : (
@@ -157,13 +158,13 @@ export default function ReviewListings(props: ReviewListingsProps) {
               // eslint-disable-next-line @typescript-eslint/no-misused-promises
               onClick={() => handleLikeToggle(review)}
             >
-              {user && review.liked.includes(user.uid) ? (
+              {user && review.liked?.includes(user.uid) ? (
                 <FavoriteIcon sx={{ color: "red" }} />
               ) : (
                 <FavoriteBorderIcon />
               )}
             </IconButton>
-            <Typography>{review.liked.length}</Typography>
+            <Typography>{review.liked?.length}</Typography>
           </CardActions>
         </Card>
       ))}

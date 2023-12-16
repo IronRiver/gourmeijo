@@ -54,7 +54,18 @@ export default function MapPage() {
       mapStyle="https://tile.openstreetmap.jp/styles/osm-bright-ja/style.json"
     >
       {reviews
-        .filter((data): data is Required<typeof data> => data.location != null)
+        .map(({ id, location }) => ({ id, location }))
+        .filter(
+          (
+            data
+          ): data is {
+            id: string;
+            location: {
+              latitude: number;
+              longitude: number;
+            };
+          } => data.location != null
+        )
         .map(({ id, location: { longitude, latitude } }) => (
           <Marker
             key={id}

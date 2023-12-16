@@ -12,17 +12,18 @@ export interface Review {
   shopName: string;
   rating: number;
   content: string;
-  imageUrl?: URL;
-  location: GeoPoint;
+  imageUrl?: string;
+  location?: GeoPoint;
   like_count: number;
   liked: string[];
 }
 
 export function convertRaw(doc: { id: string; data(): Review }) {
+  const { createdAt, location, ...data } = doc.data();
   return {
     id: doc.id,
-    ...doc.data(),
-    createdAt: (doc.data() as { createdAt: Timestamp }).createdAt.toDate(),
-    location: (doc.data() as { location: GeoPoint }).location.toJSON(),
+    ...data,
+    createdAt: createdAt.toDate(),
+    location: location,
   };
 }
