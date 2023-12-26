@@ -1,5 +1,8 @@
 import HandymanIcon from "@mui/icons-material/Handyman";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
 import Icon from "../../../public/icon.svg?react";
 
