@@ -1,5 +1,7 @@
 import "./styles/globals.css";
 
+import CssBaseline from "@mui/material/CssBaseline";
+
 import EmotionRegistry from "@/components/EmotionRegistry";
 import PatchDOMForBrowserExtensionsScript from "@/components/PatchDOMForBrowserExtensionsScript";
 
@@ -30,6 +32,7 @@ export default function RootLayout({
       <body className={`${noto_sans_jp.className} flex flex-col min-h-screen`}>
         <EmotionRegistry options={{ key: "mui", enableCssLayer: true }}>
           <ThemeProvider>
+            <CssBaseline />
             {children}
             {modal}
           </ThemeProvider>

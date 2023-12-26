@@ -16,20 +16,14 @@ import {
   Typography,
   styled,
 } from "@mui/material";
+
+import { User } from "firebase/auth";
+import { addDoc, collection } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import React, { useState, useEffect, ChangeEvent } from "react";
 
+import { db, auth, storage } from "@/app/lib/firebase/client";
 import { convertRaw } from "@/app/lib/models";
-import {
-  auth,
-  db,
-  collection,
-  addDoc,
-  storage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-} from "@/lib/firebase";
-import { User } from "@/lib/firebase";
 
 const StyledModal = styled(Modal)({
   display: "flex",

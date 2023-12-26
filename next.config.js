@@ -13,15 +13,13 @@ const webpackConfig = (config) => {
     {
       ...fileLoaderRule,
       test: /\.svg$/i,
-      // resourceQuery: /url/, // *.svg?url
-      resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /react/] }, // exclude if *.svg?url
+      resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /react/] }, // exclude if *.svg?react
     },
     // Convert all other *.svg imports to React components
     {
       test: /\.svg$/i,
       issuer: fileLoaderRule.issuer,
-      // resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, // exclude if *.svg?url
-      resourceQuery: /react/, // *.svg?url
+      resourceQuery: /react/, // *.svg?react
       use: ["@svgr/webpack"],
     }
   );

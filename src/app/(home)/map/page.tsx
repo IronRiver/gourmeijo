@@ -3,6 +3,7 @@
 import {
   DocumentData,
   Query,
+  collection,
   onSnapshot,
   orderBy,
   query,
@@ -11,10 +12,9 @@ import { useEffect, useState } from "react";
 import { Marker } from "react-map-gl";
 import Map from "react-map-gl/maplibre";
 
-import { convertRaw, Review } from "@/app/lib/models";
-import { collection, db } from "@/lib/firebase";
-
 import "maplibre-gl/dist/maplibre-gl.css";
+import { db } from "@/app/lib/firebase/client";
+import { Review, convertRaw } from "@/app/lib/models";
 
 type ReviewData = ReturnType<typeof convertRaw>;
 
